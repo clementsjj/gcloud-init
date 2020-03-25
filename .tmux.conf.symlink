@@ -1,1 +1,21 @@
-/home/cloud_user/.tmux.conf
+# Enable mouse control
+##set -g mouse-select-window on
+##set -g mouse-select-pane on
+##set -g mouse-resize-pane on
+# tmux 2.1
+set -g mouse on
+
+# Reload tmux.conf with prefix r.
+bind r source-file ~/.tmux.conf \; display "Reloaded tmux.conf."
+
+# set default erminal mode to 256color mode
+set -g default-terminal "screen-256color"
+
+################
+#Design Changes#
+################
+# panes
+set -g pane-border-style 'fg=colour19 bg=colour0'
+set -g pane-active-border-style 'bg=colour0 fg=colour9'
+
+

@@ -7,6 +7,8 @@
 	- `gcloud config list`
 - View info about installation
 	- `gcloud info`
+- View installed components
+	- `gcloud components`
 
 ## With New Cloud Instance
 - `gcloud init --console-only`

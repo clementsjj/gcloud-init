@@ -12,9 +12,9 @@ echo "### Creating Network ###"
 bash ./scripts/network.sh
 printf "~~finished creating network~~\n"
 
-# echo *** Creating Private Bucket ***
-# bash ./scripts/privatebucket.sh
-# echo ~~finished private bucket~~
+echo "### Creating Private Bucket ###"
+bash ./scripts/privatebucket.sh
+printf "~~finished private bucket~~\n"
 
 # echo *** Creating Public Bucket ***
 # bash ./scripts/publicbucket.sh

@@ -1,12 +1,12 @@
 #!bin/bash
 
-echo "### Installing Additional Components ###"
-bash ./scripts/gcloud-additional-components.sh
-printf "~~finished additional components~~\n"
+# echo "### Installing Additional Components ###"
+# bash ./scripts/gcloud-additional-components.sh
+# printf "~~finished additional components~~\n"
 
-echo "### Enabling APIs ###"
-bash ./scripts/enableapis.sh
-printf "~~finished enabling apis~~\n"
+# echo "### Enabling APIs ###"
+# bash ./scripts/enableapis.sh
+# printf "~~finished enabling apis~~\n"
 
 echo "### Creating Network ###"
 bash ./scripts/network.sh

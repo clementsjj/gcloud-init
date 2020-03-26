@@ -8,9 +8,18 @@
 - View info about installation
 	- `gcloud info`
 - View installed components
-	- `gcloud components`
+	- `gcloud components list`
+- Kickoff the auth login flow
+	- `gcloud auth login`
+- List projects in current account
+	- `gcloud projects list`
+- Set project 
+	- `gcloud config set project <projectId>`
+- View services enabled/available to install
+	- `gcloud services list --enabled/available --sort-by="NAME"`
 
 ## With New Cloud Instance
+- `git clone https://github.com/linuxacademy/content-google-cloud-engineer.git`
 - `gcloud init --console-only`
 - Select Config to use
 	- Select 1 to re-initialize with new settings
@@ -19,3 +28,92 @@
 - Copy link and paste in cloud private window; Login
 - Paste verification code in terminal
 - Select cloud project
+- Install additional components
+	- App Engine Go Extensions
+		- `sudo apt-get install google-cloud-sdk-app-engine-go
+	- Cloud Bigtable Command Line Tool
+		- `sudo apt-get install google-cloud-sdk-cbt`
+	- gcloud app Python Extensions
+		- `sudo apt-get install google-cloud-sdk-app-engine-python`
+- Enable gcloud apis through enableapis.sh script
+	- Run `bash enableapis.sh`
+- Run scripts to set up environment
+- Create Network
+	- `bash network.sh`
+		- Used by products and ads api
+		- create custom network with two subnets and a firewall rule to allow internal traffic to flow between the two subnets. 
+		- Allow full access from anywhere on port 22 to allow ssh
+		- All $ vars are set in a different script: `project_settings.sh`
+		- Be sure to update necessary variables
+		- Using `--subnet-mode=custom` means we have to set it manually
+			- Created with `gcloud beta compute networks subnets create`...
+		- `--source-ranges 10.28.0.0/15` --> CIDR Notation = "Classless Interdomain Writing"
+			- `gcloud computer firewall-rules create`
+			- allows you to specify an ip address range
+				- 10.28.0.0 - 10.29.255.255
+- Create public and private bucket
+	- Private
+		- Creates buckets as private by default
+		- When working with storage, we use `gsutil` instead of `gcloud`
+		- `bash privatebucket.sh`
+		- `gsutil mb -p $PROJECT_NAME -c regional -l $PROJECT_REGION gs://$PRIVATE_ASSETS/`
+			- `mb` make bucket; -c storage class; -l which region; 
+			- nothing specifies that it needs to be private; private by default
+		- `gs` to identify cloud storage resources
+		- `gsutil ls` -> list of buckets
+	- Public
+		- A little more involved
+		- Purpose is to serve up images in our application
+		- Because URL of cloud storage is not going to match url of frontend app, we need to adjust the headers that cloud storage sends to the browser so that the browser knows its ok that the urls are not from the same domain.
+		- Setup CORS -- set of http headers
+			- `gsutil cors set publicbucketcors.json gs://$PUBLIC_ASSETS`
+				- allow objects to be fetched from any domain
+		- Make bucket public
+			- `gsutil iam ch allUsers:objectViewer gs://$PUBLIC_ASSETS`
+			- set all users group to have object viewer rights, although can't write to or make changes
+		- `gsutl iam get gs://yolo-public-bucket`
+			- Shows members and their roles
+- Create Pub/Sub Topic that the frontend will use to publish messages to and the image processor will subscribe to
+	- `gcloud pubsub topics create $PUB_SUB_TOPIC --project $PROJECT_NAME`
+	- (`bash pubsub.sh`)
+	- pubsub is a fully managed service, so don't have to think about things behind the scenes
+- Setup bigtable and bigquery
+	- bigtable
+		- `bash bigtable.sh`
+		- much longer script; setting up parameters
+			- `gcloud beta bigtable instances create $BIGTABLE_INSTANCE_ID ....`
+			- use cbt command to make a table
+		- uses table definition file: `bigquery_table_def.json`
+			- setting some of the vars in json text and saving it to file
+			- doing it here allows us to swap out the vars before writing it to file
+		- Not all services avail in all regions. This one requires central1
+		- Check with `gcloud beta bigtable instances list`
+	- bigquery
+		- `bash bigquery.sh`
+		- `bq --location=US mk --dataset $PROJECT_NAME:"app_dataset_$ENV_TYPE"
+			- mk -> make new dataset
+		- `bq mk --external_table_definition=bigquery_table_def.json "app_dataset_$ENV_TYPE.items"
+- Deploy Products API on Kubernetes
+	- Create service account and a k8s cluster setup. Service account will be used by the code running inside a Docker container to interact with the different Google Cloud services
+	- Products API --> Used to fetch all the products that the user uploads, read data from bigquery
+	- Runs on k8s, read data from bigquery, and in order to make sure its not hitting bq too many times it will cache data by writing the data to cloud storage as a crude caching mechanism
+	- More involved that other steps, mostly filled with commands for service account
+	- Service Account
+		- Principle of least privalege
+		- Service account is a special account intended to be used by services and code rather than people
+		- Some service accounts created maintained by google. Can also use with services like computer engine
+		- When we tell Google to run a computer engine instance using a specific service account, that instance basically has all of the permissions of that service account
+		- Different tools and services have rules to locate credentials --> Application default credentials --> 
+		- When using a client library, if you don't tell code where your service account key is located, it will look for environment variable named `Google_application_credentials` that points to location of service account key. Next, use default service account.
+		- Make it easier to have software interact with the services
+	- Going through `setup.sh` for service accounts
+		- `~/Documents/content-google-cloud-engineer/products/cloud`
+		- Create service account
+		- create email address for account
+		- Key will be stored in `~/Documents/content-google-cloud-enineer/products/app/secrets
+		- 
+			
+	
+	
+	
+	

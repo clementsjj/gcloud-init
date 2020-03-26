@@ -2,15 +2,15 @@
 
 echo "### Installing Additional Components ###"
 bash ./scripts/gcloud-additional-components.sh
-echo ~~finished additional components~~
+printf "~~finished additional components~~\n"
 
 echo "### Enabling APIs ###"
 bash ./scripts/enableapis.sh
-echo ~~finished enabling apis~~
+printf "~~finished enabling apis~~\n"
 
 echo "### Creating Network ###"
 bash ./scripts/network.sh
-echo ~~finished creating network~~
+printf "~~finished creating network~~\n"
 
 # echo *** Creating Private Bucket ***
 # bash ./scripts/privatebucket.sh

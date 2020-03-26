@@ -3,7 +3,7 @@
 set -e
 
 # Import the settings from the common settings file
-source ../project_settings.sh
+source ./project_settings.sh
 
 
 gcloud compute networks create $SERVICES_NETWORK \

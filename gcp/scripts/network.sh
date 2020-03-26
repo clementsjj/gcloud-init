@@ -5,8 +5,8 @@ set -e
 # Import the settings from the common settings file
 source ./project_settings.sh
 
-printf "Project_Name = $PROJECT_NAME"
-printf "Services_Network = $SERVICES_NETWORK
+printf "\nProject_Name = $PROJECT_NAME\n"
+printf "\nServices_Network = $SERVICES_NETWORK\n"
 
 gcloud compute networks create $SERVICES_NETWORK \
     --project=$PROJECT_NAME \

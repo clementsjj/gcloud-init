@@ -6,6 +6,7 @@ set -e
 source ./project_settings.sh
 
 printf "Project_Name = $PROJECT_NAME"
+printf "Services_Network = $SERVICES_NETWORK
 
 gcloud compute networks create $SERVICES_NETWORK \
     --project=$PROJECT_NAME \

@@ -1,14 +1,14 @@
 #!bin/bash
 
-echo *** Installing Additional Components ***
+echo "### Installing Additional Components ###"
 bash ./scripts/gcloud-additional-components.sh
 echo ~~finished additional components~~
 
-echo *** Enabling APIs ***
+echo "### Enabling APIs ###"
 bash ./scripts/enableapis.sh
 echo ~~finished enabling apis~~
 
-echo *** Creating Network ***
+echo "### Creating Network ###"
 bash ./scripts/network.sh
 echo ~~finished creating network~~
 

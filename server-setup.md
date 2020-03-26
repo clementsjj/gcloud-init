@@ -1,3 +1,4 @@
+## Linux Server Setup
 - Check the following are installed (they should already be installed):
   - ruby/gem, git, tmux, htop, node
 - Install:

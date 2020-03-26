@@ -6,10 +6,10 @@
 
 ## Linux Cloud Shell Setup
 - Check the following are installed (they should already be installed):
-  - Ruby/gem, git, tmux, htop
+  - ruby/gem, git, tmux, htop, node
 - Install:
-  - mdless, xclip
-  	- `sudo apt install xcip`
+  - mdless, xclip, tree
+  	- `sudo apt install xclip`
 - Add .conf files
   - ~/.tmux.conf
   - ~/.bashrc

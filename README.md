@@ -1,5 +1,9 @@
 # gcloud-init script
 
+## Resources
+##### App Code
+`https://github.com/linuxacademy/content-google-cloud-engineer`
+
 ## Linux Cloud Shell Setup
 - Check the following are installed (they should already be installed):
   - Ruby/gem, git, tmux, htop
